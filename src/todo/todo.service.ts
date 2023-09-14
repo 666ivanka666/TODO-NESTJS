@@ -1,19 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Todo } from './todo.models';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TodoService {
   private todos: Todo[] = [];
 
   insertTodo(task: string, description: string): string {
-    const todoId = Math.random().toString();
+    const todoId = uuidv4();
     const newTodo = new Todo(todoId, task, description);
     this.todos.push(newTodo);
     return todoId;
   }
 
   getTodos(): Todo[] {
-    return [...this.todos];
+    return this.todos;
   }
 
   getSingleTodo(todoId: string): Todo {
